@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
 import "./DiceRoll.css";
+import Dice from "./Dice";
 
 const DiceRoll = () => {
   const [diceRoll, setDiceRoll] = useState({
@@ -97,9 +98,6 @@ const DiceRoll = () => {
   return (
     <>
       <div className="container">
-        {console.log(diceRoll.DiceResult)}
-        {console.log(diceRoll.DCResult)}
-        {console.log(diceRoll.DamageMode)}
         <h1 className="text-center">Dice Roller Project</h1>
         <NavBar />
         <h2 className="text-center mb-3">D&D Dice Roller</h2>
@@ -108,7 +106,11 @@ const DiceRoll = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                rollDice();
+                {
+                  if (diceRoll.DamageMode) {
+                    rollDice();
+                  }
+                }
               }}
             >
               {!diceRoll.DamageMode && (
@@ -194,9 +196,6 @@ const DiceRoll = () => {
                   max="100"
                   placeholder="Enter number of Dice to roll"
                 />
-              </div>
-
-              <div>
                 {!diceRoll.DamageMode && (
                   <div className="form-check form-switch mt-2">
                     <input
@@ -246,23 +245,36 @@ const DiceRoll = () => {
             {diceRoll.DiceResult.length > 0 && (
               <div>
                 <h5>Your Rolls</h5>
-                {diceRoll.DiceResult.map((roll, index) => (
-                  <div
-                    className="container-dice"
-                    key={index}
-                    style={{ display: "inline-block", margin: "12px" }}
-                  >
-                    <svg className="container-dice" height="60" width="60">
-                      <polygon
-                        points="30 5,55 18,55 42, 30 55,5 42,5 18"
-                        stroke="black"
-                        fill={diceRoll.DCResult[index] ? "green" : "red"}
-                        stroke-width="3.5"
-                      />
-                    </svg>
-                    <div className="centered">{roll}</div>
+                {!diceRoll.DamageMode && (
+                  <div>
+                    {console.log(diceRoll.DiceCheck)}
+                    <Dice
+                      diceCheck={diceRoll.DiceCheck}
+                      selectedDice={diceRoll.SelectedDice}
+                    />
                   </div>
-                ))}
+                )}
+                {diceRoll.DamageMode && (
+                  <div>
+                    {diceRoll.DiceResult.map((roll, index) => (
+                      <div
+                        className="container-dice"
+                        key={index}
+                        style={{ display: "inline-block", margin: "12px" }}
+                      >
+                        <svg className="container-dice" height="60" width="60">
+                          <polygon
+                            points="30 5,55 18,55 42, 30 55,5 42,5 18"
+                            stroke="black"
+                            fill={diceRoll.DCResult[index] ? "green" : "red"}
+                            stroke-width="3.5"
+                          />
+                        </svg>
+                        <div className="centered">{roll}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
             {diceRoll.DamageMode && (
