@@ -3,24 +3,28 @@ import NavBar from "./NavBar";
 import "./DiceRoll.css";
 
 const DiceRoll = () => {
-  const [diceResult, setDiceResult] = useState([]);
-  const [diceCount, setDiceCount] = useState(10);
-  const [selectedDice, setSelectedDice] = useState("d20");
-  const [diceCheck, setDiceCheck] = useState(0);
-  const [dcResult, setDCResult] = useState([]);
+  const [diceRoll, setDiceRoll] = useState({
+    DiceResult: [],
+    DiceCount: 10,
+    SelectedDice: "d20",
+    DiceCheck: 0,
+    DCResult: [],
+    DamageMode: false,
+    DamModifier: 0,
+  });
 
-  //add in crunchy crit functionality
-  //add in modifiers functionality
-  //add in damage mode functionality
+  const toggleDamageMode = () => {
+    setDiceRoll({ ...diceRoll, DamageMode: !diceRoll.DamageMode });
+  };
 
   const rollDice = () => {
     const rolls = [];
     const checks = [];
 
-    for (let i = 0; i < diceCount; i++) {
+    for (let i = 0; i < diceRoll.DiceCount; i++) {
       let maxNumber;
 
-      switch (selectedDice) {
+      switch (diceRoll.SelectedDice) {
         case "d4":
           maxNumber = 4;
           break;
@@ -45,23 +49,21 @@ const DiceRoll = () => {
       }
       const randomNum1 = Math.floor(Math.random() * maxNumber) + 1;
       rolls.push(randomNum1);
-      console.log(randomNum1);
-      console.log(diceCheck);
-      if (randomNum1 < diceCheck) {
+      if (randomNum1 < diceRoll.DiceCheck) {
         checks.push(false);
       } else {
         checks.push(true);
       }
     }
-    setDiceResult(rolls);
-    setDCResult(checks);
-    console.log(rolls);
-    console.log(checks);
+    setDiceRoll({ ...diceRoll, DiceResult: rolls, DCResult: checks });
   };
 
   return (
     <>
       <div className="container">
+        {console.log(diceRoll.DiceResult)}
+        {console.log(diceRoll.DCResult)}
+        {console.log(diceRoll.DamageMode)}
         <h1 className="text-center">Dice Roller Project</h1>
         <NavBar />
         <h2 className="text-center mb-3">D&D Dice Roller</h2>
@@ -82,7 +84,12 @@ const DiceRoll = () => {
                   type="number"
                   className="form-control"
                   id="dcInput"
-                  onChange={(e) => setDiceCheck(parseInt(e.target.value))}
+                  onChange={(e) =>
+                    setDiceRoll({
+                      ...diceRoll,
+                      DiceCheck: parseInt(e.target.value),
+                    })
+                  }
                   min="1"
                   max="100"
                   placeholder="Enter the DC here"
@@ -95,8 +102,10 @@ const DiceRoll = () => {
                 <select
                   id="diceSelect"
                   className="form-select"
-                  value={selectedDice}
-                  onChange={(e) => setSelectedDice(e.target.value)}
+                  value={diceRoll.SelectedDice}
+                  onChange={(e) =>
+                    setDiceRoll({ ...diceRoll, SelectedDice: e.target.value })
+                  }
                 >
                   <option value="d4">D4</option>
                   <option value="d6">D6</option>
@@ -115,12 +124,39 @@ const DiceRoll = () => {
                   type="number"
                   className="form-control"
                   id="diceInput"
-                  onChange={(e) => setDiceCount(parseInt(e.target.value))}
+                  onChange={(e) =>
+                    setDiceRoll({
+                      ...diceRoll,
+                      DiceCount: parseInt(e.target.value),
+                    })
+                  }
                   min="1"
                   max="100"
                   placeholder="Enter number of Dice to roll"
                 />
               </div>
+              {diceRoll.DamageMode && (
+                <div>
+                  <label htmlFor="damModInput" className="form-label mt-2">
+                    Damage Modifier
+                  </label>
+                  <input
+                    name="damModInput"
+                    type="number"
+                    className="form-control"
+                    id="damModInput"
+                    onChange={(e) =>
+                      setDiceRoll({
+                        ...diceRoll,
+                        DamModifier: parseInt(e.target.value),
+                      })
+                    }
+                    min="1"
+                    max="100"
+                    placeholder="Enter Damage Modifer"
+                  />
+                </div>
+              )}
               <div>
                 <div className="form-check form-switch mt-2">
                   <input
@@ -137,6 +173,7 @@ const DiceRoll = () => {
                     class="form-check-input"
                     type="checkbox"
                     id="damageRollsFlip"
+                    onChange={toggleDamageMode}
                   />
                   <label className="form-check-label" htmlFor="damageRollsFlip">
                     Damage Rolls
@@ -162,10 +199,10 @@ const DiceRoll = () => {
             </form>
           </div>
           <div className="col-8 text-center mt-3">
-            {diceResult.length > 0 && (
+            {diceRoll.DiceResult.length > 0 && (
               <div>
                 <h5>Your Rolls</h5>
-                {diceResult.map((roll, index) => (
+                {diceRoll.DiceResult.map((roll, index) => (
                   <div
                     className="container-dice"
                     key={index}
@@ -175,7 +212,7 @@ const DiceRoll = () => {
                       <polygon
                         points="30 5,55 18,55 42, 30 55,5 42,5 18"
                         stroke="black"
-                        fill={dcResult[index] ? "green" : "red"}
+                        fill={diceRoll.DCResult[index] ? "green" : "red"}
                         stroke-width="3.5"
                       />
                     </svg>
