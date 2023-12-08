@@ -6,7 +6,8 @@ import Dice from "./Dice";
 const DiceRoll = () => {
   const [diceRoll, setDiceRoll] = useState({
     DiceResult: [],
-    DiceCount: 10,
+    ArrayAlert: false,
+    DiceCount: 1,
     SelectedDice: "d20",
     DiceCheck: 0,
     DCResult: [],
@@ -15,6 +16,7 @@ const DiceRoll = () => {
     SumOfDam: 0,
     TrueSum: 0,
     CrunchyCrit: false,
+    DiceArray: [],
   });
 
   const toggleDamageMode = () => {
@@ -26,11 +28,39 @@ const DiceRoll = () => {
       DamageMode: !diceRoll.DamageMode,
       DamModifier: 0,
       DiceCheck: 0,
+      ArrayAlert: false,
     });
   };
 
   const toggleCrunchyCrit = () => {
     setDiceRoll({ ...diceRoll, CrunchyCrit: !diceRoll.CrunchyCrit });
+  };
+
+  const addDice = () => {
+    const tempArray = diceRoll.DiceArray;
+    tempArray.push(
+      <Dice
+        diceCheck={diceRoll.DiceCheck}
+        selectedDice={diceRoll.selectedDice}
+      />
+    );
+    setDiceRoll({
+      ...diceRoll,
+      DiceArray: tempArray,
+      ArrayAlert: false,
+    });
+    console.log(diceRoll.DiceArray);
+  };
+
+  const removeDice = () => {
+    if (diceRoll.DiceArray.length > 0) {
+      const tempArray = diceRoll.DiceArray;
+      tempArray.pop();
+      setDiceRoll({ ...diceRoll, DiceArray: tempArray });
+    } else {
+      setDiceRoll({ ...diceRoll, ArrayAlert: true });
+    }
+    console.log(diceRoll.DiceArray);
   };
 
   const rollDice = () => {
@@ -103,6 +133,12 @@ const DiceRoll = () => {
         <h2 className="text-center mb-3">D&D Dice Roller</h2>
         <div className="row justify-content-center">
           <div className="col-4 text-left">
+            {diceRoll.ArrayAlert && (
+              <div className="alert alert-danger" role="alert">
+                There are no dice to remove!
+              </div>
+            )}
+
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -178,24 +214,29 @@ const DiceRoll = () => {
                 </select>
               </div>
               <div>
-                <label htmlFor="diceInput" className="form-label mt-2">
-                  Amount of Dice
-                </label>
-                <input
-                  name="diceInput"
-                  type="number"
-                  className="form-control"
-                  id="diceInput"
-                  onChange={(e) =>
-                    setDiceRoll({
-                      ...diceRoll,
-                      DiceCount: parseInt(e.target.value),
-                    })
-                  }
-                  min="1"
-                  max="100"
-                  placeholder="Enter number of Dice to roll"
-                />
+                {diceRoll.DamageMode && (
+                  <div>
+                    <label htmlFor="diceInput" className="form-label mt-2">
+                      Amount of Dice
+                    </label>
+                    <input
+                      name="diceInput"
+                      type="number"
+                      className="form-control"
+                      id="diceInput"
+                      onChange={(e) =>
+                        setDiceRoll({
+                          ...diceRoll,
+                          DiceCount: parseInt(e.target.value),
+                        })
+                      }
+                      min="1"
+                      max="100"
+                      placeholder="Enter number of Dice to roll"
+                    />
+                  </div>
+                )}
+
                 {!diceRoll.DamageMode && (
                   <div className="form-check form-switch mt-2">
                     <input
@@ -236,47 +277,55 @@ const DiceRoll = () => {
                   </label>
                 </div>
               </div>
-              <button type="submit" className="btn btn-primary mb-3 mt-3">
-                Roll Dice
-              </button>
+              {diceRoll.DamageMode && (
+                <button type="submit" className="btn btn-primary mb-3 mt-3">
+                  Roll Dice
+                </button>
+              )}
             </form>
           </div>
           <div className="col-8 text-center mt-3">
-            {diceRoll.DiceResult.length > 0 && (
-              <div>
-                <h5>Your Rolls</h5>
-                {!diceRoll.DamageMode && (
+            <div>
+              <h5>Your Rolls</h5>
+              {!diceRoll.DamageMode && (
+                <div>
+                  {diceRoll.DiceArray.length > 0 &&
+                    diceRoll.DiceArray.map((dice) => <div>{dice}</div>)}
                   <div>
-                    {console.log(diceRoll.DiceCheck)}
-                    <Dice
-                      diceCheck={diceRoll.DiceCheck}
-                      selectedDice={diceRoll.SelectedDice}
-                    />
+                    <button className="btn btn-primary mt-1" onClick={addDice}>
+                      Add
+                    </button>
+                    <button
+                      className="btn btn-primary ml-1 mt-1 w-10"
+                      onClick={removeDice}
+                    >
+                      Remove
+                    </button>
                   </div>
-                )}
-                {diceRoll.DamageMode && (
-                  <div>
-                    {diceRoll.DiceResult.map((roll, index) => (
-                      <div
-                        className="container-dice"
-                        key={index}
-                        style={{ display: "inline-block", margin: "12px" }}
-                      >
-                        <svg className="container-dice" height="60" width="60">
-                          <polygon
-                            points="30 5,55 18,55 42, 30 55,5 42,5 18"
-                            stroke="black"
-                            fill={diceRoll.DCResult[index] ? "green" : "red"}
-                            stroke-width="3.5"
-                          />
-                        </svg>
-                        <div className="centered">{roll}</div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
+                </div>
+              )}
+              {diceRoll.DamageMode && (
+                <div>
+                  {diceRoll.DiceResult.map((roll, index) => (
+                    <div
+                      className="container-dice"
+                      key={index}
+                      style={{ display: "inline-block", margin: "12px" }}
+                    >
+                      <svg className="container-dice" height="60" width="60">
+                        <polygon
+                          points="30 5,55 18,55 42, 30 55,5 42,5 18"
+                          stroke="black"
+                          fill={diceRoll.DCResult[index] ? "green" : "red"}
+                          stroke-width="3.5"
+                        />
+                      </svg>
+                      <div className="centered">{roll}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             {diceRoll.DamageMode && (
               <div className="mt-3">
                 <h5>Damage Output</h5>

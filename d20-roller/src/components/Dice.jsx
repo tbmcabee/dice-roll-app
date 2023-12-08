@@ -42,7 +42,7 @@ const Dice = ({ diceCheck, selectedDice }) => {
   };
 
   return (
-    <div className="col-3 text-center">
+    <div className="col-2 text-center">
       <div className="container-dice">
         <svg className="container-dice" height="60" width="60">
           <polygon
@@ -73,7 +73,7 @@ const Dice = ({ diceCheck, selectedDice }) => {
                   modifer: parseInt(e.target.value),
                 })
               }
-              min="1"
+              min="0"
               max="100"
               placeholder="Mod"
             />
