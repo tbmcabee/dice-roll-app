@@ -236,19 +236,6 @@ const DiceRoll = () => {
                     />
                   </div>
                 )}
-
-                {!diceRoll.DamageMode && (
-                  <div className="form-check form-switch mt-2">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="modifiersFlip"
-                    />
-                    <label className="form-check-label" htmlFor="modifiersFlip">
-                      Modifiers
-                    </label>
-                  </div>
-                )}
                 {diceRoll.DamageMode && (
                   <div className="form-check form-switch mt-2">
                     <input
@@ -288,9 +275,15 @@ const DiceRoll = () => {
             <div>
               <h5>Your Rolls</h5>
               {!diceRoll.DamageMode && (
-                <div>
-                  {diceRoll.DiceArray.length > 0 &&
-                    diceRoll.DiceArray.map((dice) => <div>{dice}</div>)}
+                <div className="container">
+                  <div className="d-flex flex-wrap justify-content-center">
+                    {diceRoll.DiceArray.length > 0 &&
+                      diceRoll.DiceArray.map((dice, index) => (
+                        <div key={index} className="mr-2 mb-2">
+                          {dice}
+                        </div>
+                      ))}
+                  </div>
                   <div>
                     <button className="btn btn-primary mt-1" onClick={addDice}>
                       Add

@@ -42,14 +42,14 @@ const Dice = ({ diceCheck, selectedDice }) => {
   };
 
   return (
-    <div className="col-2 text-center">
-      <div className="container-dice">
+    <div className="text-center">
+      <div className="container-dice m">
         <svg className="container-dice" height="60" width="60">
           <polygon
             points="30 5,55 18,55 42, 30 55,5 42,5 18"
             stroke="black"
             fill={dice.roll >= diceCheck ? "green" : "red"}
-            stroke-width="3.5"
+            stroke-width="3"
           />
         </svg>
         <div className="centered">{dice.roll}</div>
