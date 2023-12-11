@@ -2,19 +2,16 @@ import React, { useState } from "react";
 import NavBar from "./NavBar";
 import "./DiceRoll.css";
 import Dice from "./Dice";
+import DamageDice from "./DamageDice";
 
 const DiceRoll = () => {
   const [diceRoll, setDiceRoll] = useState({
-    DiceResult: [],
     ArrayAlert: false,
     DiceCount: 1,
     SelectedDice: "d20",
     DiceCheck: 0,
-    DCResult: [],
     DamageMode: false,
     DamModifier: 0,
-    SumOfDam: 0,
-    TrueSum: 0,
     CrunchyCrit: false,
     DiceArray: [],
   });
@@ -41,7 +38,7 @@ const DiceRoll = () => {
     tempArray.push(
       <Dice
         diceCheck={diceRoll.DiceCheck}
-        selectedDice={diceRoll.selectedDice}
+        selectedDice={diceRoll.SelectedDice}
       />
     );
     setDiceRoll({
@@ -63,68 +60,6 @@ const DiceRoll = () => {
     console.log(diceRoll.DiceArray);
   };
 
-  const rollDice = () => {
-    const rolls = [];
-    const checks = [];
-
-    for (let i = 0; i < diceRoll.DiceCount; i++) {
-      let maxNumber;
-
-      switch (diceRoll.SelectedDice) {
-        case "d4":
-          maxNumber = 4;
-          break;
-        case "d6":
-          maxNumber = 6;
-          break;
-        case "d8":
-          maxNumber = 8;
-          break;
-        case "d10":
-          maxNumber = 10;
-          break;
-        case "d12":
-          maxNumber = 12;
-          break;
-        case "d20":
-          maxNumber = 20;
-          break;
-        default:
-          maxNumber = 20;
-          break;
-      }
-
-      const randomNum1 =
-        diceRoll.CrunchyCrit && i === 0
-          ? maxNumber
-          : Math.floor(Math.random() * maxNumber) + 1;
-      console.log(randomNum1);
-      rolls.push(randomNum1);
-
-      if (diceRoll.DamageMode) {
-        diceRoll.SumOfDam += randomNum1;
-      }
-      if (randomNum1 < diceRoll.DiceCheck) {
-        checks.push(false);
-      } else {
-        checks.push(true);
-      }
-    }
-    const TempSum = isNaN(diceRoll.DamModifier)
-      ? diceRoll.SumOfDam
-      : diceRoll.DamModifier + diceRoll.SumOfDam;
-
-    console.log(diceRoll.DamModifier);
-
-    setDiceRoll({
-      ...diceRoll,
-      DiceResult: rolls,
-      DCResult: checks,
-      TrueSum: TempSum,
-      SumOfDam: 0,
-    });
-  };
-
   return (
     <>
       <div className="container">
@@ -139,16 +74,7 @@ const DiceRoll = () => {
               </div>
             )}
 
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                {
-                  if (diceRoll.DamageMode) {
-                    rollDice();
-                  }
-                }
-              }}
-            >
+            <form>
               {!diceRoll.DamageMode && (
                 <div>
                   <label htmlFor="dcInput" className="form-label mt-4">
@@ -264,11 +190,6 @@ const DiceRoll = () => {
                   </label>
                 </div>
               </div>
-              {diceRoll.DamageMode && (
-                <button type="submit" className="btn btn-primary mb-3 mt-3">
-                  Roll Dice
-                </button>
-              )}
             </form>
           </div>
           <div className="col-8 text-center mt-3">
@@ -299,32 +220,15 @@ const DiceRoll = () => {
               )}
               {diceRoll.DamageMode && (
                 <div>
-                  {diceRoll.DiceResult.map((roll, index) => (
-                    <div
-                      className="container-dice"
-                      key={index}
-                      style={{ display: "inline-block", margin: "12px" }}
-                    >
-                      <svg className="container-dice" height="60" width="60">
-                        <polygon
-                          points="30 5,55 18,55 42, 30 55,5 42,5 18"
-                          stroke="black"
-                          fill={diceRoll.DCResult[index] ? "green" : "red"}
-                          stroke-width="3.5"
-                        />
-                      </svg>
-                      <div className="centered">{roll}</div>
-                    </div>
-                  ))}
+                  <DamageDice
+                    DiceSelected={diceRoll.SelectedDice}
+                    CountOfDice={diceRoll.DiceCount}
+                    CritIsCrunchy={diceRoll.CrunchyCrit}
+                    ModOfDam={diceRoll.DamModifier}
+                  />
                 </div>
               )}
             </div>
-            {diceRoll.DamageMode && (
-              <div className="mt-3">
-                <h5>Damage Output</h5>
-                <p>{diceRoll.TrueSum}</p>
-              </div>
-            )}
           </div>
         </div>
       </div>
