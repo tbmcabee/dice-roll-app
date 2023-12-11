@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./DiceRoll.css";
 
 const DamageDice = ({ DiceSelected, CountOfDice, CritIsCrunchy, ModOfDam }) => {
-  const [diceRoll, setDiceRoll] = useState({
+  const [damageDice, setDamageDice] = useState({
     DiceResult: [],
     TrueSum: 0,
   });
@@ -52,8 +52,8 @@ const DamageDice = ({ DiceSelected, CountOfDice, CritIsCrunchy, ModOfDam }) => {
 
     console.log(ModOfDam);
 
-    setDiceRoll({
-      ...diceRoll,
+    setDamageDice({
+      ...damageDice,
       DiceResult: rolls,
       TrueSum: tempSum,
     });
@@ -70,7 +70,7 @@ const DamageDice = ({ DiceSelected, CountOfDice, CritIsCrunchy, ModOfDam }) => {
       </div>
       <div className="row justify-content-center">
         <div className="d-flex flex-wrap justify-content-center">
-          {diceRoll.DiceResult.map((roll, index) => (
+          {damageDice.DiceResult.map((roll, index) => (
             <div
               className="container-dice"
               key={index}
@@ -92,7 +92,7 @@ const DamageDice = ({ DiceSelected, CountOfDice, CritIsCrunchy, ModOfDam }) => {
       <div className="row">
         <div className="col mt-3 text-center">
           <h5>Damage Output</h5>
-          <p>{diceRoll.TrueSum}</p>
+          <p>{damageDice.TrueSum}</p>
         </div>
       </div>
     </div>

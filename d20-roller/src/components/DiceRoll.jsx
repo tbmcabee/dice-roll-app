@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
 import "./DiceRoll.css";
-import Dice from "./Dice";
-import DamageDice from "./DamageDice";
+import DiceTray from "./DiceTray";
 
 const DiceRoll = () => {
   const [diceRoll, setDiceRoll] = useState({
-    ArrayAlert: false,
     DiceCount: 1,
     SelectedDice: "d20",
     DiceCheck: 0,
     DamageMode: false,
     DamModifier: 0,
     CrunchyCrit: false,
-    DiceArray: [],
   });
 
   const toggleDamageMode = () => {
@@ -33,33 +30,6 @@ const DiceRoll = () => {
     setDiceRoll({ ...diceRoll, CrunchyCrit: !diceRoll.CrunchyCrit });
   };
 
-  const addDice = () => {
-    const tempArray = diceRoll.DiceArray;
-    tempArray.push(
-      <Dice
-        diceCheck={diceRoll.DiceCheck}
-        selectedDice={diceRoll.SelectedDice}
-      />
-    );
-    setDiceRoll({
-      ...diceRoll,
-      DiceArray: tempArray,
-      ArrayAlert: false,
-    });
-    console.log(diceRoll.DiceArray);
-  };
-
-  const removeDice = () => {
-    if (diceRoll.DiceArray.length > 0) {
-      const tempArray = diceRoll.DiceArray;
-      tempArray.pop();
-      setDiceRoll({ ...diceRoll, DiceArray: tempArray });
-    } else {
-      setDiceRoll({ ...diceRoll, ArrayAlert: true });
-    }
-    console.log(diceRoll.DiceArray);
-  };
-
   return (
     <>
       <div className="container">
@@ -68,12 +38,6 @@ const DiceRoll = () => {
         <h2 className="text-center mb-3">D&D Dice Roller</h2>
         <div className="row justify-content-center">
           <div className="col-4 text-left">
-            {diceRoll.ArrayAlert && (
-              <div className="alert alert-danger" role="alert">
-                There are no dice to remove!
-              </div>
-            )}
-
             <form>
               {!diceRoll.DamageMode && (
                 <div>
@@ -193,42 +157,14 @@ const DiceRoll = () => {
             </form>
           </div>
           <div className="col-8 text-center mt-3">
-            <div>
-              <h5>Your Rolls</h5>
-              {!diceRoll.DamageMode && (
-                <div className="container">
-                  <div className="d-flex flex-wrap justify-content-center">
-                    {diceRoll.DiceArray.length > 0 &&
-                      diceRoll.DiceArray.map((dice, index) => (
-                        <div key={index} className="mr-2 mb-2">
-                          {dice}
-                        </div>
-                      ))}
-                  </div>
-                  <div>
-                    <button className="btn btn-primary mt-1" onClick={addDice}>
-                      Add
-                    </button>
-                    <button
-                      className="btn btn-primary ml-1 mt-1 w-10"
-                      onClick={removeDice}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              )}
-              {diceRoll.DamageMode && (
-                <div>
-                  <DamageDice
-                    DiceSelected={diceRoll.SelectedDice}
-                    CountOfDice={diceRoll.DiceCount}
-                    CritIsCrunchy={diceRoll.CrunchyCrit}
-                    ModOfDam={diceRoll.DamModifier}
-                  />
-                </div>
-              )}
-            </div>
+            <DiceTray
+              DamageMode={diceRoll.DamageMode}
+              SelectedDice={diceRoll.SelectedDice}
+              DiceCheck={diceRoll.DiceCheck}
+              DiceCount={diceRoll.DiceCount}
+              DamModifier={diceRoll.DamModifier}
+              CrunchyCrit={diceRoll.CrunchyCrit}
+            />
           </div>
         </div>
       </div>
