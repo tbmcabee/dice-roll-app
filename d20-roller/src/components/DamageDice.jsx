@@ -83,8 +83,16 @@ const DamageDice = ({ DiceSelected, CountOfDice, CritIsCrunchy, ModOfDam }) => {
                   fill="gold"
                   stroke-width="3.5"
                 />
+                <text
+                  x="30"
+                  y="35"
+                  textAnchor="middle"
+                  fill="black"
+                  className="font-bold"
+                >
+                  {roll}
+                </text>
               </svg>
-              <div className="centered">{roll}</div>
             </div>
           ))}
         </div>

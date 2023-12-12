@@ -43,29 +43,39 @@ const Dice = ({ diceCheck, selectedDice }) => {
 
   return (
     <div className="text-center">
-      <div className="container-dice m">
-        <svg className="container-dice" height="60" width="60">
+      <div className="inline-block">
+        <svg className="inline-block" height="60" width="60">
           <polygon
             points="30 5,55 18,55 42, 30 55,5 42,5 18"
             stroke="black"
             fill={dice.roll >= diceCheck ? "green" : "red"}
             stroke-width="3"
           />
+
+          <text
+            x="30"
+            y="35"
+            textAnchor="middle"
+            fill="black"
+            className="font-bold"
+          >
+            {dice.roll}
+          </text>
         </svg>
-        <div className="centered">{dice.roll}</div>
       </div>
-      <div>
+      <div className="">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             roll();
           }}
+          className="flex flex-col items-center"
         >
-          <div className="text-center mt-2">
+          <div className="mt-1">
             <input
               name="diceModInput"
               type="number"
-              className="text-center justify-content-center border border-primary mb-2"
+              className="text-center ::placeholder w-30 px-1 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
               id="diceModInput"
               onChange={(e) =>
                 setDice({
@@ -75,11 +85,14 @@ const Dice = ({ diceCheck, selectedDice }) => {
               }
               min="0"
               max="100"
-              placeholder="Mod"
+              placeholder="Modify"
             />
           </div>
-          <div>
-            <button type="submit" className="btn btn-primary mt-1">
+          <div className="mt-1">
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-3 rounded-full"
+            >
               Roll
             </button>
           </div>

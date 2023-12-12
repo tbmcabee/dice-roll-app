@@ -40,8 +40,18 @@ const DiceTray = ({
   return (
     <div>
       {diceTray.ArrayAlert && (
-        <div className="alert alert-danger" role="alert">
-          There are no dice to remove!
+        // <div className="alert alert-danger" role="alert">
+        //   There are no dice to remove!
+        // </div>
+        <div
+          class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+          role="alert"
+        >
+          <strong class="font-bold">HALT</strong>
+          <span class="block sm:inline">
+            {" "}
+            you have broken the law! There are no dice to remove...
+          </span>
         </div>
       )}
       <div>
@@ -57,16 +67,23 @@ const DiceTray = ({
                     </div>
                   ))}
               </div>
-              <div>
-                <button className="btn btn-primary mt-1" onClick={addDice}>
-                  Add
-                </button>
-                <button
-                  className="btn btn-primary ml-1 mt-1 w-10"
-                  onClick={removeDice}
-                >
-                  Remove
-                </button>
+              <div className="container flex justify-content-center">
+                <div className="mr-1">
+                  <button
+                    className="bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-3 rounded-full"
+                    onClick={addDice}
+                  >
+                    ADD
+                  </button>
+                </div>
+                <div>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-3 rounded-full"
+                    onClick={removeDice}
+                  >
+                    DEL
+                  </button>
+                </div>
               </div>
             </div>
           )}
