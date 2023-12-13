@@ -56,18 +56,10 @@ const DiceTray = ({
       )}
       <div>
         <div>
-          <h5>Your Rolls</h5>
+          <h5 className="mb-3">Your Rolls</h5>
           {!DamageMode && (
             <div className="container">
-              <div className="d-flex flex-wrap justify-content-center">
-                {diceTray.DiceArray.length > 0 &&
-                  diceTray.DiceArray.map((dice, index) => (
-                    <div key={index} className="mr-2 mb-2">
-                      {dice}
-                    </div>
-                  ))}
-              </div>
-              <div className="container flex justify-content-center">
+              <div className="container flex justify-content-center mb-3">
                 <div className="mr-1">
                   <button
                     className="bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-3 rounded-full"
@@ -84,6 +76,14 @@ const DiceTray = ({
                     DEL
                   </button>
                 </div>
+              </div>
+              <div className="d-flex flex-wrap justify-content-center">
+                {diceTray.DiceArray.length > 0 &&
+                  diceTray.DiceArray.map((dice, index) => (
+                    <div key={index} className="mr-2 mb-2">
+                      {dice}
+                    </div>
+                  ))}
               </div>
             </div>
           )}
