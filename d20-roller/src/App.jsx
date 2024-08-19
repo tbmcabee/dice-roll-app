@@ -1,8 +1,8 @@
 import { useState } from "react";
-import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import DiceRoll from "./components/DiceRoll";
+import DndRace from "./components/DndRace";
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/DiceRoll" element={<DiceRoll />} />
+          <Route path="/ApiExample" element={<DndRace />} />
         </Routes>
       </BrowserRouter>
     </>

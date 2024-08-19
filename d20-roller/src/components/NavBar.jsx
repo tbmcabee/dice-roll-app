@@ -25,12 +25,12 @@ const NavBar = () => {
                 DnD Dice Roller
               </a>
             </li>
+            <li>
+              <a className="dropdown-item" href="/ApiExample">
+                DnD 5e API Example
+              </a>
+            </li>
           </ul>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link active" href="#">
-            Contact Me
-          </a>
         </li>
       </ul>
     </div>
