@@ -8,12 +8,8 @@ Current Applications Implemented:
 ## DnD 5e API request app
 * Within this example, I am pulling from the "races" endpoint from the Open5e API service to pull specific category information for each avaiable character race in DnD 5e.
 * These categories include: "Name", "Ability Score Increase", "Speed", "Age", "Alignment", "Size", and"Languages"
-
-
-* React (react)
-* React Router Dom (react-router-dom)
-
-Uses TailwindCSS and Bootstrap
+* Once a back-end is implemented, the API requests for this will move there as well. However, since these are public endpoints, utilizing no tokens, they are being ran in the front-end for now.
+* When one of the API JSON response keys does not have a value for one of the categories, it is given the "N/A" generic value. 
 
 Notable Libraries/Frameworks:
 * React.js
