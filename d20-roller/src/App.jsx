@@ -9,7 +9,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<DiceRoll />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/DiceRoll" element={<DiceRoll />} />
           <Route path="/ApiExample" element={<DndRace />} />
