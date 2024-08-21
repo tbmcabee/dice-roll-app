@@ -1,6 +1,6 @@
 # DnD 5e Applications
 
-##Current Applications Implemented:
+## Current Applications Implemented:
 ### DnD 5e Dice Roller app
 * A user can roll a varity of dice (D4, D6, D8, D10, D12, D20) against user specified DC (Dice Checks) or roll for damage with the same set of dice options.
 * When rolling against a DC, the user can add individual dice and set individual modifiers to each roll based on their character's stats. When a DC is meet or exceeded, the individual dice will change to a green color signifying success and a red dignifying a failure. 
