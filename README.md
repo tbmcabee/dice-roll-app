@@ -12,8 +12,14 @@ Current Applications Implemented:
 * When one of the API JSON response keys does not have a value for one of the categories, it is given the "N/A" generic value. 
 
 Notable Libraries/Frameworks:
+* Vite Tooling
 * React.js
 * React Router Dom
 * TailwindCSS
 * Bootstrap
 * Fetch
+
+Planned Implementations:
+* Character Creation Application
+* Django Backend app for API requests and SQLite3 database
+* Github Actions YAML pipeline for security scanning and app testing
