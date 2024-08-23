@@ -2,6 +2,7 @@ import {React, useState} from 'react'
 import NavBar from "./NavBar";
 import OutputTable from './OutputTable';
 
+//Have a boolean feed into output table
 const DndRace = () => {
   const [table, onTable] = useState(false)
 
@@ -19,22 +20,8 @@ const DndRace = () => {
             <p>This table was created with data from Open5e API</p>
             <a href="https://open5e.com/api-docs">Open5e API Docs</a>
         </div>
-        <div className="row justify-content-center">
-            {!table &&(
-                    <div>
-                        <button onClick={handleClick} className="btn btn-primary mb-3 mt-3">
-                        Show Table
-                        </button>
-                    </div>)
-            }
-            {table &&(
-                    <div>
-                        <button onClick={handleClick} className="btn btn-primary mb-3 mt-3">
-                        Close Table
-                    </button>
-                    <OutputTable />
-                    </div>)
-            }
+        <div>
+          <OutputTable />
         </div>
       </div>
     </>

@@ -114,10 +114,16 @@ import Spinner from './Spinner';
 
 //Got the data to show, now I just need to have the categories adapt or add an additional or extra values/abilities 
 
+//Get spinner to work
+//load data once
 const URL = "https://api.open5e.com/v2/races/";
 
 function OutputTable() {
-    const [isLoaded, setIsLoaded] = useState(false)
+    const [isLoaded, setIsLoaded] = useState({
+        dataLoaded: false, 
+        tableClosed: true
+    })
+
     const [jsonTraits, setJsonTraits] = useState()
     const [traitNames, setTraitNames] = useState([
         "Name",
@@ -129,10 +135,15 @@ function OutputTable() {
         "Languages",
     ])
 
+    const handleClick = () => {
+        setIsLoaded({
+            tableClosed: !isLoaded.tableClosed
+        })
+      }
+
     useEffect ( () => {
         const getData = async () => {
             const responseRaces = await fetch(URL)
-            console.log(responseRaces)
             responseRaces.json().then(json => {
                 let resultArray = json.results
                 const keysArray = Object.keys(resultArray)
@@ -142,7 +153,6 @@ function OutputTable() {
                     //parses out needed data from json body: name, category traits, etc
                     let nameTrait = resultArray[i]["name"]
                     let arrayOfTraits = resultArray[i]["traits"]
-                    console.log(nameTrait)
 
                     let neededTraits = []
 
@@ -175,24 +185,21 @@ function OutputTable() {
                             currentTraitPos += 1
                         }
                     }
-                    console.log(neededTraits)
             
                     let object = {
                         name : nameTrait,
                         desc : neededTraits
                     }
             
-                    console.log(object)
-            
                     raceObjects.push(object)
+                    console.log(object)
                 }
 
                 console.log(raceObjects)
                 setJsonTraits(raceObjects)
+                setIsLoaded({dataLoaded: true})
             })
         }
-
-        setIsLoaded(true)
 
         getData();
     }, []);
@@ -201,28 +208,30 @@ function OutputTable() {
 
   //I broke the loading :((( trying to implement spinner so will need to handle that tomorrow 
   return (
-    <div>
-        {isLoaded && 
-            <table className="table-auto">
-                <thead>
-                    <tr className="mb-8">
-                        {traitNames.map((name, index) => (
-                            <th key={index}>{name}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                {jsonTraits.map((race, index) => (
-                    <tr key={index}>
-                        <td>{race["name"]}</td>
-                        {race["desc"].map((trait, indext) => (
-                            <td key={indext}>{trait}</td>
-                        ))}
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-        }
+    <div className="container">
+        <div className="flex justify-center">
+            {!isLoaded.dataLoaded? <Spinner /> :
+                <table className="table-auto justify-content-center">
+                    <thead>
+                        <tr className="mb-8">
+                            {traitNames.map((name, index) => (
+                                <th key={index}>{name}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {jsonTraits.map((race, index) => (
+                        <tr key={index}>
+                            <td>{race["name"]}</td>
+                            {race["desc"].map((trait, indext) => (
+                                <td key={indext}>{trait}</td>
+                            ))}
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            }
+        </div>
     </div>
   )
 }

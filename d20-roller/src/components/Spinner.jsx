@@ -6,7 +6,7 @@ const Spinner = () => {
   return (
     <div>
         <RotatingLines
-            strokeColor="grey"
+            strokeColor="#b0c4de"
             strokeWidth="5"
             animationDuration="0.75"
             width="96"
