@@ -1,0 +1,20 @@
+.container-dice {
+  position: relative;
+  text-align: center;
+  color: black;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dice-success {
+  fill: green;
+}
+
+.dice-fail {
+  background-color: red;
+}
