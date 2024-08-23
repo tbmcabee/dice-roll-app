@@ -1,4 +1,4 @@
-# DnD 5e Applications
+# Front End App: "goliath"
 
 ## Current Applications Implemented:
 ### DnD 5e Dice Roller app
