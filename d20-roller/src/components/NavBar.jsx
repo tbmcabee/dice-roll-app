@@ -5,7 +5,7 @@ const NavBar = () => {
     <div className="mb-3">
       <ul className="nav justify-content-center">
         <li className="nav-item">
-          <a className="nav-link" href="/">
+          <a className="nav-link" href="/Home">
             Home
           </a>
         </li>

@@ -2,13 +2,8 @@ import {React, useState} from 'react'
 import NavBar from "./NavBar";
 import OutputTable from './OutputTable';
 
-//Have a boolean feed into output table
 const DndRace = () => {
   const [table, onTable] = useState(false)
-
-  const handleClick = () => {
-    onTable(!table)
-  }
 
   return (
     <>
